@@ -2451,6 +2451,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdaaf6da4ea2dfa4086425c3b3e24977, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  photonView: {fileID: 1850644080}
 --- !u!4 &1850644079
 Transform:
   m_ObjectHideFlags: 0

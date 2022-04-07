@@ -6,6 +6,9 @@ using UnityEngine;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
+   [Header("Components")]
+   public PhotonView photonView;
+   
    public static NetworkManager instance;
 
    private void Awake()

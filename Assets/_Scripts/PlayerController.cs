@@ -5,25 +5,27 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviourPunCallbacks
+public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 {
      [HideInInspector] public int id;
 
      [Header("Info")] 
      [SerializeField] private float _moveSpeed;
      [SerializeField] private float _jumpForce;
-     [SerializeField] private GameObject hatObject;
+     public GameObject hatObject;
 
      [HideInInspector] public float curHatTime;
 
      [Header("Components")] 
      [SerializeField] private Rigidbody _rigidbody;
-     [SerializeField] private Player _photonPlayer;
+     
+     public PhotonView photonView;
+     public Player photonPlayer;
 
      [PunRPC]
      public void Initialize(Player player)
      {
-          _photonPlayer = player;
+          photonPlayer = player;
           id = player.ActorNumber;
 
           GameManager.instance.players[id - 1] = this;
@@ -40,12 +42,30 @@ public class PlayerController : MonoBehaviourPunCallbacks
      }
      private void Update()
      {
-          Move();
-
-          if (Input.GetKeyDown(KeyCode.Space))
+          if (PhotonNetwork.IsMasterClient)
           {
-               TryJump();
+               if (curHatTime >= GameManager.instance.timeToWin && !GameManager.instance.gameEnded)
+               {
+                    GameManager.instance.gameEnded = true;
+                    GameManager.instance.photonView.RPC("WinGame", RpcTarget.All, id);
+                    
+               }
+               
           }
+          if (photonView.IsMine)
+          {
+               Move();
+
+               if (Input.GetKeyDown(KeyCode.Space))
+                    TryJump();
+
+               if (hatObject.activeInHierarchy)
+               {
+                    curHatTime += Time.deltaTime;
+               }
+               
+          }
+               
      }
 
      void Move()
@@ -84,6 +104,19 @@ public class PlayerController : MonoBehaviourPunCallbacks
                          GameManager.instance.photonView.RPC("GiveHat", RpcTarget.All,id,false);
                     }
                }
+          }
+     }
+     
+
+     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+     {
+          if (stream.IsWriting)
+          {
+               stream.SendNext(curHatTime);
+          }
+          else if (stream.IsReading)
+          {
+               curHatTime = (float)stream.ReceiveNext();
           }
      }
 }

@@ -7,6 +7,11 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$USER_HOME$/Desktop/Zenva/UnityPhoton-Complete-Project-2020-LTS/UnityPhotonProject/Assets/Scripts/NetworkManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/Desktop/Zenva/UnityPhoton-Complete-Project-2020-LTS/UnityPhotonProject/Assets/Scripts/GameManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/Desktop/Zenva/UnityPhoton-Complete-Project-2020-LTS/UnityPhotonProject/Assets/Scripts/PlayerController.cs" root0="SKIP_HIGHLIGHTING" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>

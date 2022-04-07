@@ -10,10 +10,12 @@ using Random = UnityEngine.Random;
 public class GameManager : MonoBehaviourPunCallbacks
 {
     [Header("Stats")] 
-    [SerializeField] private bool _gameEnded;
-    [SerializeField] private float _timeToWin;
     [SerializeField] private float _invincibleDuration;
     private float _hatPickupTime;
+    public float timeToWin;
+    public bool gameEnded = false;
+ 
+
 
     [Header("Players")] 
     [SerializeField] private string _playerPrefabLocation;
@@ -23,6 +25,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public int playerWithHat;
 
 
+    public PhotonView photonView;
 
     public static GameManager instance;
     
@@ -84,6 +87,22 @@ public class GameManager : MonoBehaviourPunCallbacks
             return true;
         else
             return false;
-       
+    }
+
+    [PunRPC]
+    void WinGame(int playerId)
+    {
+        gameEnded = true;
+        PlayerController player = GetPlayer(playerId);
+        
+        GameUI.instance.SetWinText(player.photonPlayer.NickName);
+        
+        Invoke("GoBackToMenu",3);
+    }
+
+    void GoBackToMenu()
+    {
+        PhotonNetwork.LeaveRoom();
+        NetworkManager.instance.ChangeScene("Menu");
     }
 }

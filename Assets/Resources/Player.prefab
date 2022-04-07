@@ -200,6 +200,7 @@ MonoBehaviour:
   hatObject: {fileID: 6147842931123120212}
   curHatTime: 0
   _rigidbody: {fileID: 6147842930936344747}
+  photonView: {fileID: 6147842930936344746}
 --- !u!65 &6147842930936344744
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -248,6 +249,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
+  - {fileID: 6147842930936344745}
   - {fileID: 6147842930936344741}
   sceneViewId: 0
   InstantiationId: 0
